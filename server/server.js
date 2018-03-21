@@ -15,14 +15,14 @@ app.post('/todos', (req, res) => {
 
   todo
     .save()
-    .then(doc => {
-      //console.log('Saved todo', doc)
-      res.json(doc)
-    })
-    .catch(e => {
-      //console.log('Failed to save todo', e)
-      res.status(400).send(e)
-    })
+    .then(doc => res.json(doc))
+    .catch(e => res.status(400).send(e))
+})
+
+app.get('/todos', (req, res) => {
+  Todo.find()
+    .then(todos => res.json({ todos }))
+    .catch(err => res.status(400).send(err))
 })
 
 app.listen(3000, () => console.log('Started on port 3000.'))
