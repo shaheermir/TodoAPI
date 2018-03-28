@@ -121,6 +121,17 @@ app.get('/users/me', authenticate, (req, res) => {
   res.send(req.user)
 })
 
+app.delete('/users/me/token', authenticate, (req, res, next) => {
+  const { user, token } = req
+
+  user
+    .removeToken(token)
+    .then(() => {
+      res.status(200).send()
+    })
+    .catch(err => res.status(400).send(err))
+})
+
 app.listen(port, () => console.log(`Started on port ${port}.`))
 
 module.exports = { app }
